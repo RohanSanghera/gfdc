@@ -1,4 +1,15 @@
+#from turtle import color
+import imutils
 import numpy as np
+import cv2
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import glob
+import pillow_heif
+from  get_shapes import get_square_size, get_line_size, remove_lines
+from grid import get_coords_lines, plot_grid 
+
 
 def calculate_black_percentage(x_coords, y_coords, gray):
 
@@ -71,29 +82,29 @@ def get_test_result(classification):
     fours = classification.count(4)
     fives = classification.count(5)
 
-    if sum([twos, threes, fours, fives]) > 26:
+    if sum([twos, threes, fours, fives])/54 > 0.5:
         result_any = 3
     
-    elif sum([twos, threes, fours, fives]) > 13 and sum([twos, threes, fours, fives]) <= 26:
+    elif sum([twos, threes, fours, fives])/54 > 0.25 and sum([twos, threes, fours, fives])/54 <= 0.5:
         result_any = 2
 
-    elif sum([twos, threes, fours, fives]) > 0 and sum([twos, threes, fours, fives]) <= 13:
+    elif sum([twos, threes, fours, fives])/54 > 0 and sum([twos, threes, fours, fives])/54 <= 0.25:
         result_any = 1
 
-    elif sum([twos, threes, fours, fives]) == 0:
+    elif sum([twos, threes, fours, fives])/54 == 0:
         result_any = 0
 
 
-    if sum([fours, fives]) > 14:
+    if sum([fours, fives])/54 >= 20/76:
         result_darkest_gray = 3
     
-    elif sum([fours, fives]) > 7 and sum([fours, fives]) <= 14:
+    elif sum([fours, fives])/54 >= 10/76 and sum([fours, fives])/54 < 20/76:
         result_darkest_gray = 2
     
-    elif sum([fours, fives]) > 0 and sum([fours, fives]) <= 7:
+    elif sum([fours, fives])/54 > 0 and sum([fours, fives])/54 < 10/76:
         result_darkest_gray = 1
 
-    elif sum([fours, fives]) == 0:
+    elif sum([fours, fives])/54 == 0:
         result_darkest_gray = 0
 
 
